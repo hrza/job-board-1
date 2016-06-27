@@ -1,0 +1,32 @@
+{% extends "AppBundle:Mail:mail_layout.html.twig" %}
+
+{% block content %}
+
+    <h3>Job Moderation Request</h3>
+
+    <table>
+        <tbody>
+            <tr>
+                <td>Job Title</td>
+                <td>{{ job.title }}</td>
+            </tr>
+        <tr>
+            <td>Job Description</td>
+            <td>{{ job.description }}</td>
+        </tr>
+        <tr>
+            <td>Job Email</td>
+            <td>{{ job.email }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <a style="margin-right: 10px;" href="{{ absolute_url(path('approve_job', { job: job.id, token: expirableToken.id } )) }}">Approve Job</a>
+
+        <a href="{{ absolute_url(path('deny_job',    { job: job.id, token: expirableToken.id })) }}">Deny Job</a>
+    </div>
+
+
+
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% extends "@App/layout.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block content %}
+    <h3>Post new Job</h3>
+
+    <form action="{{ path('post_job') }}" method="post">
+
+        {{ form_row(form._token) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.submit) }}
+
+    </form>
+
+{% endblock content %}

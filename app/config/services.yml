@@ -1,0 +1,52 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+
+    job_repository:
+         class: AppBundle\Service\Job\JobRepository
+         arguments: ["@doctrine"]
+
+    job_manager:
+         class: AppBundle\Service\Job\JobManager
+         arguments: ["@job_repository", "@job_reviewer", "@job_reviewer_mailer", "@token_generator"]
+
+    job_reviewer:
+        class: AppBundle\Service\Job\JobReviewer
+        arguments: ["@job_repository"]
+
+    job_reviewer_mailer:
+        class: AppBundle\Service\Job\JobReviewMailer
+        arguments: ["@twig", "@mailer", %moderator_email%, %mailer_sender%]
+
+    token_provider:
+        class: AppBundle\Security\TokenProvider
+        arguments: ["@token_repository"]
+
+    token_repository:
+        class: AppBundle\Service\Token\TokenRepository
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    token_authenticator:
+        class: AppBundle\Security\Authentication\TokenAuthenticator
+        arguments: ["@token_repository"]
+
+    token_generator:
+        class: AppBundle\Service\Token\TokenGenerator
+        arguments: ["@token_repository"]
+
+
+#Listeners
+    exception_listener:
+        class: AppBundle\Listener\ExceptionListener
+        arguments: ["@token_repository", "@security.token_storage"]
+        tags: [{name: kernel.event_listener, event: kernel.exception, method: onKernelException }]
+
+    job_voter:
+        class: AppBundle\Security\JobVoter
+        tags: [{ name: security.voter }]
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

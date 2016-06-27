@@ -1,0 +1,18 @@
+{% extends "@App/layout.html.twig" %}
+
+{% block content %}
+    <div class="jumbotron text-center">
+        <h1>Job Listings</h1>
+        <p>Take a look at this great job offers or create new one</p>
+        <div class="row text-center">
+            <div class="col-lg-6 pull-left ">
+                <p><a class="btn btn-primary btn-lg" href="{{ path('jobs') }}" role="button">View All</a></p>
+            </div>
+
+            <div class="col-lg-6 pull-right ">
+                <p><a class="btn btn-success btn-lg" href="{{ path('post_job') }}" role="button">Post New</a></p>
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}

@@ -1,0 +1,41 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+  {% block content %}
+
+        <div class="row">
+            <div class="col-lg-3 pull-left">
+               <h3>Jobs</h3>
+            </div>
+
+            <div class="col-lg-1 pull-right">
+                <a class="btn btn-primary" href="{{ path('post_job') }}">New</a>
+            </div>
+        </div>
+
+
+      <table class="table">
+          <tr>
+              <th>Email</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Status</th>
+          </tr>
+
+          {% for job in jobs %}
+              <tr>
+                  <td>{{ job.email }}</td>
+                  <td>{{ job.title }}</td>
+                  <td>{{ job.description }}</td>
+                  <td>{{ job.status }}</td>
+              </tr>
+
+          {% else %}
+
+              <tr>
+                  <td colspan="4"> No posted jobs</td>
+              </tr>
+
+          {% endfor %}
+
+      </table>
+  {% endblock content %}
